@@ -1,37 +1,58 @@
-var compile = require("./lib/compiler")
+module.exports = function blendSurface(srcSurface, dstSurface, outSurface, shaderFunction) {
+    var len = dstSurface.length,
+        src_r, src_g, src_b, src_a,
+        dst_r, dst_g, dst_b, dst_a,
+        out_r, out_g, out_b, out_a,
+        px;
 
-module.exports = compile(softlight)
+    for (px = 0; px < len; px += 4) {
+        src_r = srcSurface[px] / 255;
+        src_g = srcSurface[px + 1] / 255;
+        src_b = srcSurface[px + 2] / 255;
+        src_a = srcSurface[px + 3] / 255
 
-function softlight(src, dst, out) {
+        dst_r = dstSurface[px] / 255;
+        dst_g = dstSurface[px + 1] / 255;
+        dst_b = dstSurface[px + 2] / 255;
+        dst_a = dstSurface[px + 3] / 255;
+
+        {
     var ratio, r, g, b;
 
 
-    if (src.r < 0.5) {
-        r =  2 * dst.r * src.r + (dst.r * dst.r) * (1 - 2 * src.r)
+    if (src_r < 0.5) {
+        r =  2 * dst_r * src_r + (dst_r * dst_r) * (1 - 2 * src_r)
     } else {
-        r = 2 * dst.r * (1 - src.r) + Math.sqrt(dst.r)*(2 * src.r - 1)
+        r = 2 * dst_r * (1 - src_r) + Math.sqrt(dst_r)*(2 * src_r - 1)
     }
 
-    if (src.g < 0.5) {
-        g =  2 * dst.g * src.g + (dst.g * dst.g) * (1 - 2 * src.g)
+    if (src_g < 0.5) {
+        g =  2 * dst_g * src_g + (dst_g * dst_g) * (1 - 2 * src_g)
     } else {
-        g = 2 * dst.g * (1 - src.g) + Math.sqrt(dst.g)*(2 * src.g - 1)
+        g = 2 * dst_g * (1 - src_g) + Math.sqrt(dst_g)*(2 * src_g - 1)
     }
 
-    if (src.b < 0.5) {
-        b =  2 * dst.b * src.b + (dst.b * dst.b) * (1 - 2 * src.b)
+    if (src_b < 0.5) {
+        b =  2 * dst_b * src_b + (dst_b * dst_b) * (1 - 2 * src_b)
     } else {
-        b = 2 * dst.b * (1 - src.b) + Math.sqrt(dst.b)*(2 * src.b - 1)
+        b = 2 * dst_b * (1 - src_b) + Math.sqrt(dst_b)*(2 * src_b - 1)
     }
 
-    out.a = (src.a + dst.a) - (src.a * dst.a);
+    out_a = (src_a + dst_a) - (src_a * dst_a);
 
-    ratio = out.a > 0 ? src.a / out.a : 0;
+    ratio = out_a > 0 ? src_a / out_a : 0;
 
-    out.r =  ((1 - ratio) * dst.r) + (ratio * (((1 - dst.a) * src.r) +
-                (dst.a * r)));
-    out.g = ((1 - ratio) * dst.g) + (ratio * (((1 - dst.a) * src.g) +
-                (dst.a * g)));
-    out.b = ((1 - ratio) * dst.b) + (ratio * (((1 - dst.a) * src.b) +
-                (dst.a * b)));
+    out_r =  ((1 - ratio) * dst_r) + (ratio * (((1 - dst_a) * src_r) +
+                (dst_a * r)));
+    out_g = ((1 - ratio) * dst_g) + (ratio * (((1 - dst_a) * src_g) +
+                (dst_a * g)));
+    out_b = ((1 - ratio) * dst_b) + (ratio * (((1 - dst_a) * src_b) +
+                (dst_a * b)));
+}
+
+        outSurface[px] = out_r * 255;
+        outSurface[px + 1] = out_g * 255;
+        outSurface[px + 2] = out_b * 255;
+        outSurface[px + 3] = out_a * 255;
+    }
 }

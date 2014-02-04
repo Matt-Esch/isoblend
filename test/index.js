@@ -66,14 +66,13 @@ test("functions return non-zero values", function (assert) {
     var src = [0.5, 0.4, 0.3, 0.5]
     var dst = [0.9, 0.1, 0.8, 0.6]
 
-    for (var blendMode in isoblend) {
+
         var result = []
-        isoblend[blendMode](src, dst, result)
+        isoblend.burn(src, dst, result)
         assert.equal(result.length, 4)
         assert.true(result[0] > 0)
         assert.true(result[1] > 0)
         assert.true(result[2] > 0)
         assert.true(result[3] > 0)
         assert.end()
-    }
 })
