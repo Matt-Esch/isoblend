@@ -2,13 +2,13 @@
 
 ## PDF Blend modes as defined by the Adobe® Supplement to the ISO 32000/-1
 
-For a demonstrations see [isoblend-testbed][19]
-
 [![build status][1]][2] [![dependency status][3]][4] [![coverage report][9]][10] [![stability index][15]][16]
 
 [![npm stats][13]][14]
 
 [![browser support][5]][6]
+
+For a demonstration see [isoblend-testbed][19]
 
 Optimised RGBA blend functions performing blend operations based on the PDF
 / Adobe® Photoshop® blend modes. The functions are designed to work with the
