@@ -2,13 +2,13 @@
 
 ## PDF Blend modes as defined by the Adobe® Supplement to the ISO 32000/-1
 
+For a demonstrations see [isoblend-testbed][19]
+
 [![build status][1]][2] [![dependency status][3]][4] [![coverage report][9]][10] [![stability index][15]][16]
 
 [![npm stats][13]][14]
 
 [![browser support][5]][6]
-
-
 
 Optimised RGBA blend functions performing blend operations based on the PDF
 / Adobe® Photoshop® blend modes. The functions are designed to work with the
@@ -22,6 +22,7 @@ Each blend function takes src, dst and out array, where
   - `dst` is the image underneath
   - `out` is the array in which to write the result of the operation
 
+The RGBA values in the images range from [0, 255]
 
 The following RGBA blend modes are supported
 
@@ -51,8 +52,8 @@ The following RGBA blend modes are supported
 ```js
 var isoblend = require("isoblend")
 
-var src = [0.1, 0.5, 0.7, 0.9, 0.1, 0.5, 0.7, 0.9]  // 2 pixels [RGBARGBA]
-var dst = [0.5, 0.4, 0.3, 0.4, 0.9, 0.2, 0.5, 0.8]  // 2 pixels to blend over
+var src = [10, 50, 127, 90, 90, 50, 235, 255]  // 2 pixels [RGBARGBA]
+var dst = [50, 60,  30, 55, 60, 20,   5, 128]  // 2 pixels to blend over
 
 var out = []
 
@@ -92,3 +93,4 @@ iso.normal(src, dst, out)
 
   [17]: http://wwwimages.adobe.com/www.adobe.com/content/dam/Adobe/en/devnet/pdf/pdfs/PDF32000_2008.pdf
   [18]: http://wwwimages.adobe.com/www.adobe.com/content/dam/Adobe/en/devnet/pdf/pdfs/adobe_supplement_iso32000_1.pdf
+  [19]: http://matt-esch.github.io/isoblend-testbed
